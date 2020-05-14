@@ -1,6 +1,7 @@
 package org.vander.keyshared;
 
 import org.apache.pulsar.client.api.*;
+import org.apache.pulsar.client.impl.Murmur3_32Hash;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,9 +17,9 @@ public class PulsarConsumers {
 
         consumer = client.newConsumer()
                 .topic("my-topic")
-//                .ackTimeout(30, TimeUnit.SECONDS)
+                .ackTimeout(30, TimeUnit.SECONDS)
                 .subscriptionName("my-subscription")
-//                .keySharedPolicy(KeySharedPolicy.stickyHashRange().ranges(Range.of(0,10)))
+                .keySharedPolicy(KeySharedPolicy.stickyHashRange().ranges(Range.of(5536,5536)))
                 .subscriptionType(SubscriptionType.Key_Shared)
                 .subscribe();
 

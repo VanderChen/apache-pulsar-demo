@@ -14,7 +14,6 @@ public class PulsarProducer {
 
     private static PulsarClient client;
     private static Producer<byte[]> producer;
-    private static Consumer<byte[]> consumer;
 
     public static void main(String[] args) throws Exception {
         client = PulsarClient.builder()
