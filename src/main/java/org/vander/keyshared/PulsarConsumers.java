@@ -15,12 +15,14 @@ public class PulsarConsumers {
                 .serviceUrl("pulsar://localhost:6650")
                 .build();
 
+        int hashcode = Murmur3_32Hash.getInstance().makeHash("key-1") % 65536;
+
         consumer = client.newConsumer()
                 .topic("my-topic")
                 .ackTimeout(30, TimeUnit.SECONDS)
                 .subscriptionName("my-subscription")
-                .keySharedPolicy(KeySharedPolicy.stickyHashRange().ranges(Range.of(5536,5536)))
                 .subscriptionType(SubscriptionType.Key_Shared)
+                .keySharedPolicy(KeySharedPolicy.stickyHashRange().ranges(Range.of(hashcode - 1, hashcode + 1)))
                 .subscribe();
 
         startConsumer();
@@ -30,6 +32,7 @@ public class PulsarConsumers {
     private static void startConsumer() throws PulsarClientException {
 
         while (true) {
+
             // Wait for a message
             Message<byte[]> msg = consumer.receive();
             try {
