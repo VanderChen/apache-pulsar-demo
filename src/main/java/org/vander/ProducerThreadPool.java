@@ -14,7 +14,7 @@ public class ProducerThreadPool {
 
         ExecutorService pool = Executors.newFixedThreadPool(producerThreadNumber);
         for (int topicIndex = 0; topicIndex < topicNumber; topicIndex++) {
-            pool.submit(new ProducerRunnable(url, topicName + Integer.toString(topicNumber), sleepTime));
+            pool.submit(new ProducerRunnable(url, topicName + Integer.toString(topicIndex), sleepTime));
         }
         pool.shutdown();
     }
