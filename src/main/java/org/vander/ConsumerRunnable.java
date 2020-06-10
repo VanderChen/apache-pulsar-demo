@@ -25,7 +25,7 @@ public class ConsumerRunnable implements Runnable{
             // Wait for a message
             Message<byte[]> msg = consumer.receive();
             try {
-//                System.out.printf(topicName + " " + Thread.currentThread().getName() + "   Message from: %s\n", new String(msg.getData()));
+                System.out.printf(topicName + " " + Thread.currentThread().getName() + "   Message from: %s\n", new String(msg.getData()));
                 consumer.acknowledge(msg);
             } catch (Exception e) {
                 System.err.printf("Unable to consume message: %s", e.getMessage());
