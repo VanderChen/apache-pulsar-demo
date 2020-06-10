@@ -5,6 +5,12 @@ Start cluster with 3 brokers and 3 bookies.
 docker-compose up -d
 ```
 
+Build the project
+
+```shell script
+mvn clean package
+```
+
 ### Usage
 
 Producer
