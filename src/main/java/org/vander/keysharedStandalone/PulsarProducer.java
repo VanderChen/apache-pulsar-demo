@@ -1,4 +1,4 @@
-package org.vander.keyshared;
+package org.vander.keysharedStandalone;
 
 import org.apache.pulsar.client.api.BatcherBuilder;
 import org.apache.pulsar.client.api.Producer;

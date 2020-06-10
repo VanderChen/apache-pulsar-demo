@@ -1,4 +1,4 @@
-package org.vander.keyshared;
+package org.vander.keysharedStandalone;
 
 import org.apache.pulsar.client.api.*;
 import org.apache.pulsar.client.impl.Murmur3_32Hash;
