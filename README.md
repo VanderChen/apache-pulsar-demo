@@ -2,7 +2,14 @@
 Start cluster with 3 brokers and 3 bookies.
 
 ```shell script
+cd pulsarscripts
 docker-compose up -d
+```
+
+Shutdown the cluster
+```shell script
+cd pulsarscripts
+./down.sh
 ```
 
 Build the project
