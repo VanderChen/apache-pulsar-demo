@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class ProducerRunnable implements Runnable{
 
-    private static PulsarClient client;
-    private static Producer<byte[]> producer;
+    private PulsarClient client;
+    private Producer<byte[]> producer;
 
     private String url = null;
     private String topicName = null;
@@ -20,7 +20,7 @@ public class ProducerRunnable implements Runnable{
         this.sleepTime = sleepTime;
     }
 
-    private static void startProducer(String topicName) throws Exception {
+    private void startProducer(String topicName) throws Exception {
         System.out.println(topicName + " " + "Start produce");
         while (true) {
             producer.newMessage()

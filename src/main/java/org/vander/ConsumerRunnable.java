@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ConsumerRunnable implements Runnable{
 
-    private static PulsarClient client;
-    private static Consumer<byte[]> consumer;
+    private PulsarClient client;
+    private Consumer<byte[]> consumer;
 
     private String url = null;
     private String topicName = null;
@@ -19,7 +19,7 @@ public class ConsumerRunnable implements Runnable{
         this.subtopicName = subtopicName;
     }
 
-    private static void startConsumer(String topicName) throws PulsarClientException {
+    private void startConsumer(String topicName) throws PulsarClientException {
         System.out.println(topicName + " " + "Start consume");
         while (true) {
             // Wait for a message
