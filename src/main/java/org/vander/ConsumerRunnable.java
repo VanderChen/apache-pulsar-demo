@@ -19,13 +19,13 @@ public class ConsumerRunnable implements Runnable{
         this.subtopicName = subtopicName;
     }
 
-    private static void startConsumer() throws PulsarClientException {
+    private static void startConsumer(String topicName) throws PulsarClientException {
 
         while (true) {
             // Wait for a message
             Message<byte[]> msg = consumer.receive();
             try {
-                System.out.printf("thread:" + Thread.currentThread().getName() + "   Message from: %s\n", new String(msg.getData()));
+                System.out.printf(topicName + " " + Thread.currentThread().getName() + "   Message from: %s\n", new String(msg.getData()));
                 consumer.acknowledge(msg);
             } catch (Exception e) {
                 System.err.printf("Unable to consume message: %s", e.getMessage());
@@ -52,7 +52,7 @@ public class ConsumerRunnable implements Runnable{
                             .build())
                     .subscribe();
 
-            startConsumer();
+            startConsumer(topicName);
         }catch (Exception e){
             e.printStackTrace();
         }

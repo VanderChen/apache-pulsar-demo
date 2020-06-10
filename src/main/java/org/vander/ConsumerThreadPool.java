@@ -6,15 +6,16 @@ import java.util.concurrent.Executors;
 
 public class ConsumerThreadPool {
     public static void main(String[] args) {
-        int threadCount = 4;
+        int consumerThreadCount = 20;
+        int topicNumber = 100;
 
         String url = "pulsar://localhost:6650";
-        String topicName = "my-topic";
+        String topicName = "my-topic-";
         String subtopicName = "my-subscription";
 
-        ExecutorService pool = Executors.newFixedThreadPool(threadCount);
-        for (int threadIndex = 0; threadIndex < threadCount; threadIndex++) {
-            pool.submit(new ConsumerRunnable(url, topicName, subtopicName));
+        ExecutorService pool = Executors.newFixedThreadPool(consumerThreadCount);
+        for (int topicIndex = 0; topicIndex < topicNumber; topicIndex++) {
+            pool.submit(new ConsumerRunnable(url, topicName + Integer.toString(topicIndex), subtopicName));
         }
         pool.shutdown();
     }

@@ -20,11 +20,11 @@ public class ProducerRunnable implements Runnable{
         this.sleepTime = sleepTime;
     }
 
-    private static void startProducer() throws Exception {
+    private static void startProducer(String topicName) throws Exception {
         System.out.println("Start produce");
         while (true) {
             producer.newMessage()
-                    .value(("thread:" + Thread.currentThread().getName()).getBytes())
+                    .value((topicName + " " + Thread.currentThread().getName()).getBytes())
                     .send();
 
 
@@ -43,7 +43,7 @@ public class ProducerRunnable implements Runnable{
                     .topic(topicName)
                     .create();
 
-            startProducer();
+            startProducer(topicName);
         }catch (Exception e){
             e.printStackTrace();
         }
