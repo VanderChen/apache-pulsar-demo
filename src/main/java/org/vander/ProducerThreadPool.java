@@ -10,11 +10,12 @@ public class ProducerThreadPool {
 
         String url = "pulsar://localhost:6650";
         String topicName = "my-topic-";
-        int sleepTime = 1000;
+        int sleepTime = 1000;  //milliseconds
+        int size = 1024;   //byte
 
         ExecutorService pool = Executors.newFixedThreadPool(producerThreadNumber);
         for (int topicIndex = 0; topicIndex < topicNumber; topicIndex++) {
-            pool.submit(new ProducerRunnable(url, topicName + Integer.toString(topicIndex), sleepTime));
+            pool.submit(new ProducerRunnable(url, topicName + Integer.toString(topicIndex), sleepTime, size));
         }
         pool.shutdown();
     }

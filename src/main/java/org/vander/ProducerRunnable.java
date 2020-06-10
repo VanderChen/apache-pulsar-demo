@@ -4,6 +4,7 @@ import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClient;
 
 import javax.swing.*;
+import java.util.Arrays;
 
 public class ProducerRunnable implements Runnable{
 
@@ -13,22 +14,36 @@ public class ProducerRunnable implements Runnable{
     private String url = null;
     private String topicName = null;
     private int sleepTime = 0;
+    private int size = 0;
 
-    public ProducerRunnable(String url, String topicName, int sleepTime) {
+    public ProducerRunnable(String url, String topicName, int sleepTime, int size) {
         this.url = url;
         this.topicName = topicName;
         this.sleepTime = sleepTime;
+        this.size = size;
     }
 
-    private void startProducer(String topicName) throws Exception {
+    private static String createSpecificSizeString(int size){
+        byte[] temp = new byte[size];
+        Arrays.fill(temp, (byte)0);
+        String temp_str = new String(temp);
+        return temp_str;
+    }
+
+    private void startProducer(String topicName, int sleepTime, int size) throws Exception {
         System.out.println(topicName + " " + "Start produce");
         while (true) {
+
+//            producer.newMessage()
+//                    .value((topicName + " " + Thread.currentThread().getName()).getBytes())
+//                    .send();
+
             producer.newMessage()
-                    .value((topicName + " " + Thread.currentThread().getName()).getBytes())
+                    .value(createSpecificSizeString(size).getBytes())
                     .send();
 
 
-            Thread.sleep(1000);
+            Thread.sleep(sleepTime);
         }
     }
 
@@ -43,7 +58,7 @@ public class ProducerRunnable implements Runnable{
                     .topic(topicName)
                     .create();
 
-            startProducer(topicName);
+            startProducer(topicName, sleepTime,size);
         }catch (Exception e){
             e.printStackTrace();
         }
