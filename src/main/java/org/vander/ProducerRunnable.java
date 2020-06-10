@@ -21,7 +21,7 @@ public class ProducerRunnable implements Runnable{
     }
 
     private static void startProducer(String topicName) throws Exception {
-        System.out.println("Start produce");
+        System.out.println(topicName + " " + "Start produce");
         while (true) {
             producer.newMessage()
                     .value((topicName + " " + Thread.currentThread().getName()).getBytes())

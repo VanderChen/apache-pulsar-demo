@@ -20,7 +20,7 @@ public class ConsumerRunnable implements Runnable{
     }
 
     private static void startConsumer(String topicName) throws PulsarClientException {
-
+        System.out.println(topicName + " " + "Start consume");
         while (true) {
             // Wait for a message
             Message<byte[]> msg = consumer.receive();
