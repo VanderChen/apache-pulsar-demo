@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 public class ConsumerThreadPool {
     public static void main(String[] args) {
         int consumerThreadCount = 20;
-        int topicNumber = 100;
+        int topicNumber = 20;
 
         String url = "pulsar://localhost:6650";
         String topicName = "my-topic-";

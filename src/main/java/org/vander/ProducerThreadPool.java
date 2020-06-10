@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 public class ProducerThreadPool {
     public static void main(String[] args) {
         int producerThreadNumber = 20;
-        int topicNumber = 50;
+        int topicNumber = 20;
 
         String url = "pulsar://localhost:6650";
         String topicName = "my-topic-";
