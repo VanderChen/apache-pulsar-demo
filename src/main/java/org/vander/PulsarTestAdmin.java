@@ -2,7 +2,6 @@ package org.vander;
 
 import org.apache.pulsar.client.admin.PulsarAdmin;
 import org.apache.pulsar.common.policies.data.TopicStats;
-import org.apache.pulsar.common.stats.Metrics;
 import org.apache.pulsar.shade.com.google.gson.*;
 
 
@@ -25,7 +24,7 @@ public class PulsarTestAdmin {
         JsonArray brokerMetrics = admin.brokerStats().getMetrics();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(brokerMetrics);
-        FileWriter writer = new FileWriter(config.getStatsFileName() + ".json");
+        FileWriter writer = new FileWriter(config.getStatsFolderName() + "broker_stats.json");
         writer.write(json);
         writer.close();
 
@@ -41,10 +40,13 @@ public class PulsarTestAdmin {
             totalRateIn += topicStats.msgRateIn;
             totalRateOut += topicStats.msgRateOut;
             String topicJson = gson.toJson(topicStats);
-            writer = new FileWriter(config.getStatsFileName() + topic.split("/")[4] + ".json");
+            writer = new FileWriter(config.getStatsFolderName() + topic.split("/")[4] + "_stats.json");
             writer.write(topicJson);
             writer.close();
         }
+
+        System.out.println("totalRateIn: " + totalRateIn);
+        System.out.println("totalRateOut: " + totalRateOut);
 
         System.exit(0);
     }

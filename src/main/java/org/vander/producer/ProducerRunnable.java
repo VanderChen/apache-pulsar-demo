@@ -35,13 +35,6 @@ public class ProducerRunnable implements Runnable{
 
             long startTime = System.currentTimeMillis();
 
-//            producer.newMessage()
-//                    .value((topicName + " " + Thread.currentThread().getName()).getBytes())
-//                    .sendAsync()
-//                    .thenAccept(msgId -> {
-//                        System.out.printf("Message with ID %s successfully sent with time %d\n", msgId, (System.currentTimeMillis() - startTime));
-//                    });
-
             producer.newMessage()
                     .value(createSpecificSizeString(size).getBytes())
                     .sendAsync()

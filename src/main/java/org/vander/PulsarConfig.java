@@ -1,5 +1,7 @@
 package org.vander;
 
+import java.io.File;
+
 public class PulsarConfig {
 
     private int producerThreadNumber = 3;
@@ -12,16 +14,19 @@ public class PulsarConfig {
 
     private int size = 1024;   //byte
 
-    private String statsFileName = "results/stats";
+    private final String statsFolderName = "results/standalone";
 
-//    Getter and Setter Methods
-
-    public String getStatsFileName() {
-        return statsFileName;
+    public PulsarConfig() {
+        File folder = new File(statsFolderName);
+        if (!folder.exists() && !folder.isDirectory()) {
+            folder.mkdirs();
+        }
     }
 
-    public void setStatsFileName(String statsFileName) {
-        this.statsFileName = statsFileName;
+    //    Getter and Setter Methods
+
+    public String getStatsFolderName() {
+        return statsFolderName;
     }
 
     public String getAdminUrl() {
