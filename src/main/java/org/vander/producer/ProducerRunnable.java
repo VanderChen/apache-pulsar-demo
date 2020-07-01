@@ -1,4 +1,4 @@
-package org.vander;
+package org.vander.producer;
 
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClient;
@@ -16,10 +16,9 @@ public class ProducerRunnable implements Runnable{
     private int sleepTime = 0;
     private int size = 0;
 
-    public ProducerRunnable(String url, String topicName, int sleepTime, int size) {
+    public ProducerRunnable(String url, String topicName, int size) {
         this.url = url;
         this.topicName = topicName;
-        this.sleepTime = sleepTime;
         this.size = size;
     }
 
@@ -30,7 +29,7 @@ public class ProducerRunnable implements Runnable{
         return temp_str;
     }
 
-    private void startProducer(String topicName, int sleepTime, int size) throws Exception {
+    private void startProducer(String topicName, int size) throws Exception {
         System.out.println(topicName + " " + "Start produce");
         while (true) {
 
@@ -49,9 +48,6 @@ public class ProducerRunnable implements Runnable{
                     .thenAccept(msgId -> {
                         System.out.printf("Message with ID %s successfully sent with time %d\n", msgId, (System.currentTimeMillis() - startTime));
                     });
-
-
-            Thread.sleep(sleepTime);
         }
     }
 
@@ -66,7 +62,7 @@ public class ProducerRunnable implements Runnable{
                     .topic(topicName)
                     .create();
 
-            startProducer(topicName, sleepTime,size);
+            startProducer(topicName, size);
         }catch (Exception e){
             e.printStackTrace();
         }

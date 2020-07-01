@@ -1,4 +1,4 @@
-package org.vander;
+package org.vander.consumer;
 
 import org.apache.pulsar.client.api.*;
 

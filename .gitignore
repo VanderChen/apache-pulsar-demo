@@ -15,5 +15,6 @@ buildNumber.properties
 .settings/
 .classpath
 .project
+results
 
 
