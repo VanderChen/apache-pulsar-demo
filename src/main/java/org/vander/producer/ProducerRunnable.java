@@ -15,11 +15,15 @@ public class ProducerRunnable implements Runnable{
     private String topicName = null;
     private int sleepTime = 0;
     private int size = 0;
+    private int topicNumberPerThread = 0;
+    private String payload = null;
 
-    public ProducerRunnable(String url, String topicName, int size) {
+    public ProducerRunnable(String url, String topicName, int size, int topicNumberPerThread) {
         this.url = url;
         this.topicName = topicName;
         this.size = size;
+        this.payload = createSpecificSizeString(size);
+        this.topicNumberPerThread = topicNumberPerThread;
     }
 
     private static String createSpecificSizeString(int size){
@@ -29,33 +33,29 @@ public class ProducerRunnable implements Runnable{
         return temp_str;
     }
 
-    private void startProducer(String topicName, int size) throws Exception {
-        System.out.println(topicName + " " + "Start produce");
-        while (true) {
-
-            long startTime = System.currentTimeMillis();
-
-            producer.newMessage()
-                    .value(createSpecificSizeString(size).getBytes())
-                    .sendAsync()
-                    .thenAccept(msgId -> {
-                        System.out.printf("Message with ID %s successfully sent with time %d\n", msgId, (System.currentTimeMillis() - startTime));
-                    });
-        }
-    }
-
     @Override
-    public void run(){
+    public void run() {
         try {
             client = PulsarClient.builder()
                     .serviceUrl(url)
                     .build();
 
-            producer = client.newProducer()
-                    .topic(topicName)
-                    .create();
+            while (true) {
+                for (int topicIndex = 0; topicIndex < topicNumberPerThread; topicIndex++) {
+                    producer = client.newProducer()
+                            .topic(topicName + "-" + topicIndex)
+                            .create();
 
-            startProducer(topicName, size);
+                    long startTime = System.currentTimeMillis();
+
+                    producer.newMessage()
+                            .value(payload.getBytes())
+                            .sendAsync()
+                            .thenAccept(msgId -> {
+                                System.out.printf("Message with ID %s successfully sent with time %d\n", msgId, (System.currentTimeMillis() - startTime));
+                            });
+                }
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

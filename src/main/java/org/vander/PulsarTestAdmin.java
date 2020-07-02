@@ -24,7 +24,7 @@ public class PulsarTestAdmin {
         JsonArray brokerMetrics = admin.brokerStats().getMetrics();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(brokerMetrics);
-        FileWriter writer = new FileWriter(config.getStatsFolderName() + "broker_stats.json");
+        FileWriter writer = new FileWriter(config.getStatsFolderName() + "/broker_stats.json");
         writer.write(json);
         writer.close();
 
@@ -40,7 +40,7 @@ public class PulsarTestAdmin {
             totalRateIn += topicStats.msgRateIn;
             totalRateOut += topicStats.msgRateOut;
             String topicJson = gson.toJson(topicStats);
-            writer = new FileWriter(config.getStatsFolderName() + topic.split("/")[4] + "_stats.json");
+            writer = new FileWriter(config.getStatsFolderName() + "/" + topic.split("/")[4] + "_stats.json");
             writer.write(topicJson);
             writer.close();
         }

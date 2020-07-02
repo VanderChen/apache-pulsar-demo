@@ -11,14 +11,15 @@ public class ProducerThreadPool {
 
         int producerThreadNumber = config.getProducerThreadNumber();
         int topicNumber = config.getTopicNumber();
+        int topicNumberPerThread = config.getTopicNumberPerThread();
 
         String url = config.getUrl();
         String topicName = config.getTopicName();
         int size = config.getSize();   //byte
 
         ExecutorService pool = Executors.newFixedThreadPool(producerThreadNumber);
-        for (int topicIndex = 0; topicIndex < topicNumber; topicIndex++) {
-            pool.submit(new ProducerRunnable(url, topicName + Integer.toString(topicIndex), size));
+        for (int threadIndex = 0; threadIndex < producerThreadNumber; threadIndex++) {
+            pool.submit(new ProducerRunnable(url, topicName + Integer.toString(threadIndex), size, topicNumberPerThread));
         }
         pool.shutdown();
     }

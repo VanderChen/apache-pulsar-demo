@@ -11,6 +11,7 @@ public class ConsumerThreadPool {
         PulsarConfig config = new PulsarConfig();
 
         int consumerThreadNumber = config.getConsumerThreadNumber();
+        int topicNumberPerThread = config.getTopicNumberPerThread();
         int topicNumber = config.getTopicNumber();
 
         String url = config.getUrl();
@@ -18,8 +19,8 @@ public class ConsumerThreadPool {
         String subtopicName = config.getTopicName();
 
         ExecutorService pool = Executors.newFixedThreadPool(consumerThreadNumber);
-        for (int topicIndex = 0; topicIndex < topicNumber; topicIndex++) {
-            pool.submit(new ConsumerRunnable(url, topicName + Integer.toString(topicIndex), subtopicName));
+        for (int threadIndex = 0; threadIndex < consumerThreadNumber; threadIndex++) {
+            pool.submit(new ConsumerRunnable(url, topicName + Integer.toString(threadIndex), subtopicName, topicNumberPerThread));
         }
         pool.shutdown();
     }

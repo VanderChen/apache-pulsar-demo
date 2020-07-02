@@ -7,6 +7,7 @@ public class PulsarConfig {
     private int producerThreadNumber = 3;
     private int consumerThreadNumber = 3;
     private int topicNumber = 3;
+    private int topicNumberPerThread = 10;
 
     private final String url = "pulsar://192.168.1.105:6650";
     private final String adminUrl = "http://192.168.1.105:8080";
@@ -24,6 +25,10 @@ public class PulsarConfig {
     }
 
     //    Getter and Setter Methods
+
+    public int getTopicNumberPerThread() {
+        return topicNumberPerThread;
+    }
 
     public String getStatsFolderName() {
         return statsFolderName;
