@@ -1,23 +1,45 @@
 package org.vander;
 
+import org.apache.pulsar.shade.com.google.gson.Gson;
+
 import java.io.File;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
 
 public class PulsarConfig {
 
-    private int producerThreadNumber = 3;
-    private int consumerThreadNumber = 3;
-    private int topicNumber = 3;
-    private int topicNumberPerThread = 10;
+    private int producerThreadNumber;
+    private int consumerThreadNumber;
+    private int topicNumberPerThread;
 
-    private final String url = "pulsar://192.168.1.105:6650";
-    private final String adminUrl = "http://192.168.1.105:8080";
+    private String url;
+    private String adminUrl;
     private final String topicName = "my-topic-";
 
-    private int size = 1024;   //byte
+    private int size;   //byte
 
-    private final String statsFolderName = "results/standalone";
+    private String statsFolderName;
 
-    public PulsarConfig() {
+    public PulsarConfig(){
+//        Read config from TestConfig json file
+        try {
+            Gson gson = new Gson();
+            Reader jsonReader = Files.newBufferedReader(Paths.get("TestConfig.json"));
+            Map<?, ?> jsonMap = gson.fromJson(jsonReader, Map.class);
+            this.producerThreadNumber = Integer.parseInt((String) jsonMap.get("producerThreadNumber"));
+            this.consumerThreadNumber = Integer.parseInt((String) jsonMap.get("consumerThreadNumber"));
+            this.topicNumberPerThread = Integer.parseInt((String) jsonMap.get("topicNumberPerThread"));
+            this.url = (String) jsonMap.get("url");
+            this.adminUrl = (String) jsonMap.get("adminUrl");
+            this.size = Integer.parseInt((String) jsonMap.get("payload-size"));
+            this.statsFolderName = (String) jsonMap.get("statsFolderName");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+//        Check path available
         File folder = new File(statsFolderName);
         if (!folder.exists() && !folder.isDirectory()) {
             folder.mkdirs();
@@ -42,18 +64,6 @@ public class PulsarConfig {
         return producerThreadNumber;
     }
 
-    public void setProducerThreadNumber(int producerThreadNumber) {
-        this.producerThreadNumber = producerThreadNumber;
-    }
-
-    public int getTopicNumber() {
-        return topicNumber;
-    }
-
-    public void setTopicNumber(int topicNumber) {
-        this.topicNumber = topicNumber;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -66,15 +76,7 @@ public class PulsarConfig {
         return consumerThreadNumber;
     }
 
-    public void setConsumerThreadNumber(int consumerThreadNumber) {
-        this.consumerThreadNumber = consumerThreadNumber;
-    }
-
     public int getSize() {
         return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 }
