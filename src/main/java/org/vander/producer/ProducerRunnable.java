@@ -4,12 +4,14 @@ import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClient;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ProducerRunnable implements Runnable{
 
     private PulsarClient client;
-    private Producer<byte[]> producer;
+    private List<Producer<byte[]>> producerList = new ArrayList<Producer<byte[]>>();
 
     private String url = null;
     private String topicName = null;
@@ -40,15 +42,17 @@ public class ProducerRunnable implements Runnable{
                     .serviceUrl(url)
                     .build();
 
+            for (int topicIndex = 0; topicIndex < topicNumberPerThread; topicIndex++) {
+                producerList.add(client.newProducer()
+                        .topic(topicName + "-" + topicIndex)
+                        .create());
+            }
+
             while (true) {
                 for (int topicIndex = 0; topicIndex < topicNumberPerThread; topicIndex++) {
-                    producer = client.newProducer()
-                            .topic(topicName + "-" + topicIndex)
-                            .create();
-
                     long startTime = System.currentTimeMillis();
 
-                    producer.newMessage()
+                    producerList.get(topicIndex).newMessage()
                             .value(payload.getBytes())
                             .sendAsync()
                             .thenAccept(msgId -> {

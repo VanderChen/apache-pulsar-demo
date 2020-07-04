@@ -10,7 +10,6 @@ public class ProducerThreadPool {
         PulsarConfig config = new PulsarConfig();
 
         int producerThreadNumber = config.getProducerThreadNumber();
-        int topicNumber = config.getTopicNumber();
         int topicNumberPerThread = config.getTopicNumberPerThread();
 
         String url = config.getUrl();
