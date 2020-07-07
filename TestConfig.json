@@ -3,7 +3,12 @@
   "consumerThreadNumber": "3",
   "topicNumberPerThread": "3",
   "url": "pulsar://192.168.1.105:6650",
-  "adminUrl": "http://192.168.1.105:8080",
+  "adminUrl": [
+    "http://219.219.223.222:8080",
+    "http://219.219.223.224:8080",
+    "http://219.219.223.226:8080"
+  ],
   "payload-size": "1024",
-  "statsFolderName": "results/standalone"
+  "statsFolderName": "results/docker",
+  "enableTopicStats": "false"
 }

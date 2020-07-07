@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 public class PulsarConfig {
@@ -15,12 +16,13 @@ public class PulsarConfig {
     private int topicNumberPerThread;
 
     private String url;
-    private String adminUrl;
-    private final String topicName = "my-topic-";
+    private List<String> adminUrl;
+    private String topicName = "my-topic-";
 
     private int size;   //byte
 
     private String statsFolderName;
+    private boolean enableTopicStats;
 
     public PulsarConfig(){
 //        Read config from TestConfig json file
@@ -32,9 +34,10 @@ public class PulsarConfig {
             this.consumerThreadNumber = Integer.parseInt((String) jsonMap.get("consumerThreadNumber"));
             this.topicNumberPerThread = Integer.parseInt((String) jsonMap.get("topicNumberPerThread"));
             this.url = (String) jsonMap.get("url");
-            this.adminUrl = (String) jsonMap.get("adminUrl");
+            this.adminUrl = (List<String>) jsonMap.get("adminUrl");
             this.size = Integer.parseInt((String) jsonMap.get("payload-size"));
             this.statsFolderName = (String) jsonMap.get("statsFolderName");
+            this.enableTopicStats = Boolean.parseBoolean((String) jsonMap.get("enableTopicStats"));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -56,8 +59,12 @@ public class PulsarConfig {
         return statsFolderName;
     }
 
-    public String getAdminUrl() {
+    public List<String> getAdminUrl() {
         return adminUrl;
+    }
+
+    public boolean isEnableTopicStats() {
+        return enableTopicStats;
     }
 
     public int getProducerThreadNumber() {
