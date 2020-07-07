@@ -37,6 +37,14 @@ bin/pulsar initialize-cluster-metadata --cluster pulsar-cluster-1 --zookeeper 21
 ```
 prometheusStatsHttpPort=8100
 
+
+bin/bookkeeper shell metaformat
+
+bin/pulsar-daemon start bookie
+
+bin/pulsar-daemon start broker
+
+bin/pulsar-admin brokers list pulsar-cluster
 ### Usage
 
 Config the 
