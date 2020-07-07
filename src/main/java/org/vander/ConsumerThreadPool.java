@@ -13,7 +13,7 @@ public class ConsumerThreadPool {
         int consumerThreadNumber = config.getConsumerThreadNumber();
         int topicNumberPerThread = config.getTopicNumberPerThread();
 
-        String url = config.getUrl();
+        String url = config.getConsumerUrl();
         String topicName = config.getTopicName();
         String subtopicName = config.getTopicName();
 

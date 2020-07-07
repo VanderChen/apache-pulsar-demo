@@ -15,7 +15,8 @@ public class PulsarConfig {
     private int consumerThreadNumber;
     private int topicNumberPerThread;
 
-    private String url;
+    private List<String> producerUrlList;
+    private String consumerUrl;
     private List<String> adminUrl;
     private String topicName = "my-topic-";
 
@@ -33,7 +34,8 @@ public class PulsarConfig {
             this.producerThreadNumber = Integer.parseInt((String) jsonMap.get("producerThreadNumber"));
             this.consumerThreadNumber = Integer.parseInt((String) jsonMap.get("consumerThreadNumber"));
             this.topicNumberPerThread = Integer.parseInt((String) jsonMap.get("topicNumberPerThread"));
-            this.url = (String) jsonMap.get("url");
+            this.producerUrlList = (List<String>) jsonMap.get("producerUrl");
+            this.consumerUrl = (String) jsonMap.get("consumerUrl");
             this.adminUrl = (List<String>) jsonMap.get("adminUrl");
             this.size = Integer.parseInt((String) jsonMap.get("payload-size"));
             this.statsFolderName = (String) jsonMap.get("statsFolderName");
@@ -71,8 +73,12 @@ public class PulsarConfig {
         return producerThreadNumber;
     }
 
-    public String getUrl() {
-        return url;
+    public List<String> getProducerUrlList() {
+        return producerUrlList;
+    }
+
+    public String getConsumerUrl() {
+        return consumerUrl;
     }
 
     public String getTopicName() {

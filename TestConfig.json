@@ -2,7 +2,10 @@
   "producerThreadNumber": "3",
   "consumerThreadNumber": "3",
   "topicNumberPerThread": "3",
-  "url": "pulsar://192.168.1.105:6650",
+  "producerUrl": [
+    "pulsar://192.168.1.105:6650"
+  ],
+  "consumerUrl": "pulsar://192.168.1.105:6650",
   "adminUrl": [
     "http://219.219.223.222:8080",
     "http://219.219.223.224:8080",

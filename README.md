@@ -19,6 +19,24 @@ cd deployment/docker
 
 Following the [official instruction](https://pulsar.apache.org/docs/en/deploy-bare-metal/).
 
+Using Conf
+
+```bash
+mkdir -pv data/zookeeper
+echo 1 > data/zookeeper/myid
+```
+
+Start zookeeper
+
+```bash
+bin/pulsar-daemon start zookeeper
+```
+
+```bash
+bin/pulsar initialize-cluster-metadata --cluster pulsar-cluster-1 --zookeeper 219.219.223.222:2181 --configuration-store 219.219.223.222:2181 --web-service-url http://219.219.223.222:8080,219.219.223.224:8080,219.219.223.226:8080 --web-service-url-tls https://219.219.223.222:8443,219.219.223.224:8443,219.219.223.226:8443 --broker-service-url pulsar://219.219.223.222:6650,219.219.223.224:6650,219.219.223.226:6650 --broker-service-url-tls pulsar+ssl://219.219.223.222:6651,219.219.223.6651
+```
+prometheusStatsHttpPort=8100
+
 ### Usage
 
 Config the 

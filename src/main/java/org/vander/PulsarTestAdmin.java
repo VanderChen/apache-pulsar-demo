@@ -5,6 +5,7 @@ import org.apache.pulsar.common.policies.data.TopicStats;
 import org.apache.pulsar.shade.com.google.gson.*;
 
 
+import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
 
@@ -25,6 +26,12 @@ public class PulsarTestAdmin {
             JsonArray brokerMetrics = admin.brokerStats().getMetrics();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(brokerMetrics);
+
+            File folder = new File(config.getStatsFolderName() + "/broker" + brokerIndex);
+            if (!folder.exists() && !folder.isDirectory()) {
+                folder.mkdirs();
+            }
+
             FileWriter writer = new FileWriter(config.getStatsFolderName() + "/broker" + brokerIndex + "/broker_stats.json");
             writer.write(json);
             writer.close();
@@ -42,7 +49,7 @@ public class PulsarTestAdmin {
                     totalRateIn += topicStats.msgRateIn;
                     totalRateOut += topicStats.msgRateOut;
                     String topicJson = gson.toJson(topicStats);
-                    writer = new FileWriter(config.getStatsFolderName() + "/" + topic.split("/")[4] + "_stats.json");
+                    writer = new FileWriter(config.getStatsFolderName() + "/broker" + brokerIndex + "/" + topic.split("/")[4] + "_stats.json");
                     writer.write(topicJson);
                     writer.close();
                 }
