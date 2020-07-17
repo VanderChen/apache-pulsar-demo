@@ -2,6 +2,7 @@ package org.vander.producer;
 
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClient;
+import org.vander.PulsarConfig;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -13,19 +14,15 @@ public class ProducerRunnable implements Runnable{
     private PulsarClient client;
     private List<Producer<byte[]>> producerList = new ArrayList<Producer<byte[]>>();
 
-    private String url = null;
-    private String topicName = null;
-    private int sleepTime = 0;
-    private int size = 0;
-    private int topicNumberPerThread = 0;
-    private String payload = null;
+    private PulsarConfig config;
+    private int threadIndex;
 
-    public ProducerRunnable(String url, String topicName, int size, int topicNumberPerThread) {
-        this.url = url;
-        this.topicName = topicName;
-        this.size = size;
-        this.payload = createSpecificSizeString(size);
-        this.topicNumberPerThread = topicNumberPerThread;
+    private String payload;
+
+    public ProducerRunnable(PulsarConfig config, int threadIndex) {
+        this.config = config;
+        this.threadIndex = threadIndex;
+        this.payload = createSpecificSizeString(config.getSize());
     }
 
     private static String createSpecificSizeString(int size){
@@ -38,26 +35,27 @@ public class ProducerRunnable implements Runnable{
     @Override
     public void run() {
         try {
+            String url = config.getProducerUrlList().get((int)(Math.random() * config.getProducerUrlList().size()));
+
             client = PulsarClient.builder()
                     .serviceUrl(url)
                     .build();
 
-            for (int topicIndex = 0; topicIndex < topicNumberPerThread; topicIndex++) {
+            for (int topicIndex = 0; topicIndex < config.getProducerThreadNumber(); topicIndex++) {
                 producerList.add(client.newProducer()
-                        .topic(topicName + "-" + topicIndex)
+                        .topic(config.getTopicName() + threadIndex + "-" + topicIndex)
                         .create());
+                Thread.sleep(config.getCreateTopicInterval());
             }
-
-            while (true) {
-                for (int topicIndex = 0; topicIndex < topicNumberPerThread; topicIndex++) {
-                    long startTime = System.currentTimeMillis();
-
+            int msgCount = 0;
+            while (config.isEnableContinueMsg() || msgCount <= config.getMsgNumberPerTopic()) {
+                for (int topicIndex = 0; topicIndex < config.getTopicNumberPerThread(); topicIndex++) {
                     producerList.get(topicIndex).newMessage()
                             .value(payload.getBytes())
                             .sendAsync()
                             .thenAccept(msgId -> {
-                                System.out.printf("Message with ID %s successfully sent with time %d\n", msgId, (System.currentTimeMillis() - startTime));
                             });
+                    msgCount++;
                 }
             }
         }catch (Exception e){

@@ -21,6 +21,9 @@ public class PulsarConfig {
     private String topicName = "my-topic-";
 
     private int size;   //byte
+    private boolean enableContinueMsg;
+    private int msgNumberPerTopic;
+    private int createTopicInterval;
 
     private String statsFolderName;
     private boolean enableTopicStats;
@@ -34,10 +37,17 @@ public class PulsarConfig {
             this.producerThreadNumber = Integer.parseInt((String) jsonMap.get("producerThreadNumber"));
             this.consumerThreadNumber = Integer.parseInt((String) jsonMap.get("consumerThreadNumber"));
             this.topicNumberPerThread = Integer.parseInt((String) jsonMap.get("topicNumberPerThread"));
+
             this.producerUrlList = (List<String>) jsonMap.get("producerUrl");
             this.consumerUrl = (String) jsonMap.get("consumerUrl");
             this.adminUrl = (List<String>) jsonMap.get("adminUrl");
+
             this.size = Integer.parseInt((String) jsonMap.get("payload-size"));
+            this.enableContinueMsg = Boolean.parseBoolean((String) jsonMap.get("enableContinueMsg"));
+            this.msgNumberPerTopic = Integer.parseInt((String) jsonMap.get("msgNumberPerTopic"));
+            this.createTopicInterval = Integer.parseInt((String) jsonMap.get("createTopicInterval"));
+
+
             this.statsFolderName = (String) jsonMap.get("statsFolderName");
             this.enableTopicStats = Boolean.parseBoolean((String) jsonMap.get("enableTopicStats"));
         }catch (Exception e){
@@ -51,7 +61,19 @@ public class PulsarConfig {
         }
     }
 
-    //    Getter and Setter Methods
+    //    Getter Methods
+
+    public boolean isEnableContinueMsg() {
+        return enableContinueMsg;
+    }
+
+    public int getMsgNumberPerTopic() {
+        return msgNumberPerTopic;
+    }
+
+    public int getCreateTopicInterval() {
+        return createTopicInterval;
+    }
 
     public int getTopicNumberPerThread() {
         return topicNumberPerThread;

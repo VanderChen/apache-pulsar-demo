@@ -1,6 +1,7 @@
 package org.vander.consumer;
 
 import org.apache.pulsar.client.api.*;
+import org.vander.PulsarConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,41 +10,36 @@ import java.util.concurrent.TimeUnit;
 public class ConsumerRunnable implements Runnable{
 
     private PulsarClient client;
-//    private [] consumerList;
     private List<Consumer<byte[]>> consumerList = new ArrayList<Consumer<byte[]>>();
 
-    private String url = null;
-    private String topicName = null;
-    private String subtopicName = null;
-    private int topicNumberPerThread = 0;
+    private PulsarConfig config;
+    private int threadIndex;
 
-    public ConsumerRunnable(String url, String topicName, String subtopicName, int topicNumberPerThread) {
-        this.url = url;
-        this.topicName = topicName;
-        this.subtopicName = subtopicName;
-        this.topicNumberPerThread = topicNumberPerThread;
+    public ConsumerRunnable(PulsarConfig config, int threadIndex) {
+        this.config = config;
+        this.threadIndex = threadIndex;
     }
 
     @Override
     public void run(){
         try {
             client = PulsarClient.builder()
-                    .serviceUrl(url)
+                    .serviceUrl(config.getConsumerUrl())
                     .build();
 
             int consumerCount = 100;
 
-            for (int topicIndex = 0; topicIndex < topicNumberPerThread; topicIndex++) {
+            for (int topicIndex = 0; topicIndex < config.getTopicNumberPerThread(); topicIndex++) {
                 consumerList.add(client.newConsumer()
-                        .topic(topicName + "-" + topicIndex)
+                        .topic(config.getTopicName() + threadIndex + "-" + topicIndex)
                         .ackTimeout(30, TimeUnit.SECONDS)
-                        .subscriptionName(subtopicName)
+                        .subscriptionName(config.getTopicName())
                         .subscriptionType(SubscriptionType.Shared)
                         .subscribe());
             }
 
             while (true) {
-                for (int topicIndex = 0; topicIndex < topicNumberPerThread; topicIndex++) {
+                for (int topicIndex = 0; topicIndex < config.getTopicNumberPerThread(); topicIndex++) {
                     consumerCount = 100;
                     while (consumerCount > 0){
                         // Wait for a message

@@ -11,5 +11,8 @@
   ],
   "payload-size": "1024",
   "statsFolderName": "results/standalone",
-  "enableTopicStats": "false"
+  "enableTopicStats": "false",
+  "enableContinueMsg": "false",
+  "msgNumberPerTopic": "100",
+  "createTopicInterval": "1000"
 }
