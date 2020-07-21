@@ -53,10 +53,12 @@ public class PulsarTestAdmin {
                     totalRateOut += topicStats.msgRateOut;
                     totalMsgInCount += topicStats.msgInCounter;
                     totalMsgOutCount += topicStats.msgOutCounter;
-                    String topicJson = gson.toJson(topicStats);
-                    writer = new FileWriter(config.getStatsFolderName() + "/broker" + brokerIndex + "/" + topic.split("/")[4] + "_stats.json");
-                    writer.write(topicJson);
-                    writer.close();
+                    if (config.isEnableTopicStatsFileLog()) {
+                        String topicJson = gson.toJson(topicStats);
+                        writer = new FileWriter(config.getStatsFolderName() + "/broker" + brokerIndex + "/" + topic.split("/")[4] + "_stats.json");
+                        writer.write(topicJson);
+                        writer.close();
+                    }
                 }
 
                 System.out.println("totalRateIn: " + totalRateIn);

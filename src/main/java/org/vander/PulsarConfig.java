@@ -14,6 +14,7 @@ public class PulsarConfig {
     private int producerThreadNumber;
     private int consumerThreadNumber;
     private int topicNumberPerThread;
+    private int clientIOThreadsNumber;
 
     private List<String> producerUrlList;
     private String consumerUrl;
@@ -27,16 +28,18 @@ public class PulsarConfig {
 
     private String statsFolderName;
     private boolean enableTopicStats;
+    private boolean enableTopicStatsFileLog;
 
     public PulsarConfig(){
 //        Read config from TestConfig json file
         try {
             Gson gson = new Gson();
-            Reader jsonReader = Files.newBufferedReader(Paths.get("TestConfig.json.Template"));
+            Reader jsonReader = Files.newBufferedReader(Paths.get("TestConfig.json"));
             Map<?, ?> jsonMap = gson.fromJson(jsonReader, Map.class);
             this.producerThreadNumber = Integer.parseInt((String) jsonMap.get("producerThreadNumber"));
             this.consumerThreadNumber = Integer.parseInt((String) jsonMap.get("consumerThreadNumber"));
             this.topicNumberPerThread = Integer.parseInt((String) jsonMap.get("topicNumberPerThread"));
+            this.clientIOThreadsNumber = Integer.parseInt((String) jsonMap.get("clientIOThreadsNumber"));
 
             this.producerUrlList = (List<String>) jsonMap.get("producerUrl");
             this.consumerUrl = (String) jsonMap.get("consumerUrl");
@@ -47,9 +50,9 @@ public class PulsarConfig {
             this.msgNumberPerTopic = Integer.parseInt((String) jsonMap.get("msgNumberPerTopic"));
             this.createTopicInterval = Integer.parseInt((String) jsonMap.get("createTopicInterval"));
 
-
             this.statsFolderName = (String) jsonMap.get("statsFolderName");
             this.enableTopicStats = Boolean.parseBoolean((String) jsonMap.get("enableTopicStats"));
+            this.enableTopicStatsFileLog = Boolean.parseBoolean((String) jsonMap.get("enableTopicStatsFileLog"));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -62,6 +65,15 @@ public class PulsarConfig {
     }
 
     //    Getter Methods
+
+
+    public int getClientIOThreadsNumber() {
+        return clientIOThreadsNumber;
+    }
+
+    public boolean isEnableTopicStatsFileLog() {
+        return enableTopicStatsFileLog;
+    }
 
     public boolean isEnableContinueMsg() {
         return enableContinueMsg;

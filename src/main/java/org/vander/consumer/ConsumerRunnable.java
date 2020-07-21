@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ConsumerRunnable implements Runnable{
+public class ConsumerRunnable implements Runnable {
 
     private PulsarClient client;
     private List<Consumer<byte[]>> consumerList = new ArrayList<Consumer<byte[]>>();
@@ -21,13 +21,12 @@ public class ConsumerRunnable implements Runnable{
     }
 
     @Override
-    public void run(){
+    public void run() {
         try {
             client = PulsarClient.builder()
+                    .ioThreads(config.getClientIOThreadsNumber())
                     .serviceUrl(config.getConsumerUrl())
                     .build();
-
-            int consumerCount = 100;
 
             for (int topicIndex = 0; topicIndex < config.getTopicNumberPerThread(); topicIndex++) {
                 consumerList.add(client.newConsumer()
@@ -40,22 +39,17 @@ public class ConsumerRunnable implements Runnable{
 
             while (true) {
                 for (int topicIndex = 0; topicIndex < config.getTopicNumberPerThread(); topicIndex++) {
-                    consumerCount = 100;
-                    while (consumerCount > 0){
-                        // Wait for a message
-                        Message<byte[]> msg = consumerList.get(topicIndex).receive();
-                        try {
-                            consumerList.get(topicIndex).acknowledge(msg);
-                        } catch (Exception e) {
-                            System.err.printf("Unable to consume message: %s", e.getMessage());
-                            consumerList.get(topicIndex).negativeAcknowledge(msg);
-                        }
-
-                        consumerCount--;
+                    // Wait for a message
+                    Message<byte[]> msg = consumerList.get(topicIndex).receive();
+                    try {
+                        consumerList.get(topicIndex).acknowledge(msg);
+                    } catch (Exception e) {
+                        System.err.printf("Unable to consume message: %s", e.getMessage());
+                        consumerList.get(topicIndex).negativeAcknowledge(msg);
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

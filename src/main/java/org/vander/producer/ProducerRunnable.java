@@ -38,10 +38,11 @@ public class ProducerRunnable implements Runnable{
             String url = config.getProducerUrlList().get((int)(Math.random() * config.getProducerUrlList().size()));
 
             client = PulsarClient.builder()
+                    .ioThreads(config.getClientIOThreadsNumber())
                     .serviceUrl(url)
                     .build();
 
-            for (int topicIndex = 0; topicIndex < config.getProducerThreadNumber(); topicIndex++) {
+            for (int topicIndex = 0; topicIndex < config.getTopicNumberPerThread(); topicIndex++) {
                 producerList.add(client.newProducer()
                         .topic(config.getTopicName() + threadIndex + "-" + topicIndex)
                         .create());

@@ -42,7 +42,7 @@
 # PULSAR_GLOBAL_ZK_CONF=
 
 # Extra options to be passed to the jvm
-PULSAR_MEM=${PULSAR_MEM:-"-Xms8g -Xmx8g -XX:MaxDirectMemorySize=16g"}
+PULSAR_MEM=${PULSAR_MEM:-"-Xms32g -Xmx32g -XX:MaxDirectMemorySize=64g"}
 
 # Garbage collection options
 PULSAR_GC=${PULSAR_GC:-"-XX:+UseG1GC -XX:MaxGCPauseMillis=10 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB"}
