@@ -32,7 +32,7 @@ public class PulsarConfig {
 //        Read config from TestConfig json file
         try {
             Gson gson = new Gson();
-            Reader jsonReader = Files.newBufferedReader(Paths.get("TestConfig.json"));
+            Reader jsonReader = Files.newBufferedReader(Paths.get("TestConfig.json.Template"));
             Map<?, ?> jsonMap = gson.fromJson(jsonReader, Map.class);
             this.producerThreadNumber = Integer.parseInt((String) jsonMap.get("producerThreadNumber"));
             this.consumerThreadNumber = Integer.parseInt((String) jsonMap.get("consumerThreadNumber"));

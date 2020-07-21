@@ -55,9 +55,11 @@ public class ProducerRunnable implements Runnable{
                             .sendAsync()
                             .thenAccept(msgId -> {
                             });
-                    msgCount++;
                 }
+                msgCount++;
             }
+
+            System.exit(0);
         }catch (Exception e){
             e.printStackTrace();
         }
