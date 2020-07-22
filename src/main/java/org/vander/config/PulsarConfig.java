@@ -66,7 +66,6 @@ public class PulsarConfig {
 
     //    Getter Methods
 
-
     public int getClientIOThreadsNumber() {
         return clientIOThreadsNumber;
     }
@@ -125,5 +124,65 @@ public class PulsarConfig {
 
     public int getSize() {
         return size;
+    }
+
+    public void setProducerThreadNumber(int producerThreadNumber) {
+        this.producerThreadNumber = producerThreadNumber;
+    }
+
+    public void setConsumerThreadNumber(int consumerThreadNumber) {
+        this.consumerThreadNumber = consumerThreadNumber;
+    }
+
+    public void setTopicNumberPerThread(int topicNumberPerThread) {
+        this.topicNumberPerThread = topicNumberPerThread;
+    }
+
+    public void setClientIOThreadsNumber(int clientIOThreadsNumber) {
+        this.clientIOThreadsNumber = clientIOThreadsNumber;
+    }
+
+    public void setProducerUrlList(List<String> producerUrlList) {
+        this.producerUrlList = producerUrlList;
+    }
+
+    public void setConsumerUrl(String consumerUrl) {
+        this.consumerUrl = consumerUrl;
+    }
+
+    public void setAdminUrl(List<String> adminUrl) {
+        this.adminUrl = adminUrl;
+    }
+
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setEnableContinueMsg(boolean enableContinueMsg) {
+        this.enableContinueMsg = enableContinueMsg;
+    }
+
+    public void setMsgNumberPerTopic(int msgNumberPerTopic) {
+        this.msgNumberPerTopic = msgNumberPerTopic;
+    }
+
+    public void setCreateTopicInterval(int createTopicInterval) {
+        this.createTopicInterval = createTopicInterval;
+    }
+
+    public void setStatsFolderName(String statsFolderName) {
+        this.statsFolderName = statsFolderName;
+    }
+
+    public void setEnableTopicStats(boolean enableTopicStats) {
+        this.enableTopicStats = enableTopicStats;
+    }
+
+    public void setEnableTopicStatsFileLog(boolean enableTopicStatsFileLog) {
+        this.enableTopicStatsFileLog = enableTopicStatsFileLog;
     }
 }

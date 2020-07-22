@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProducerRunnable implements Runnable{
+public class SharedProducerRunnable implements Runnable{
 
     private PulsarClient client;
     private List<Producer<byte[]>> producerList = new ArrayList<Producer<byte[]>>();
@@ -18,7 +18,7 @@ public class ProducerRunnable implements Runnable{
 
     private String payload;
 
-    public ProducerRunnable(PulsarConfig config, int threadIndex) {
+    public SharedProducerRunnable(PulsarConfig config, int threadIndex) {
         this.config = config;
         this.threadIndex = threadIndex;
         this.payload = createSpecificSizeString(config.getSize());
