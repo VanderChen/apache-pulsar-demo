@@ -2,9 +2,8 @@ package org.vander.producer;
 
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClient;
-import org.vander.PulsarConfig;
+import org.vander.config.PulsarConfig;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

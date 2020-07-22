@@ -1,13 +1,13 @@
 package org.vander.consumer;
 
 import org.apache.pulsar.client.api.*;
-import org.vander.PulsarConfig;
+import org.vander.config.PulsarConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ConsumerRunnable implements Runnable {
+public class SharedConsumerRunnable implements Runnable {
 
     private PulsarClient client;
     private List<Consumer<byte[]>> consumerList = new ArrayList<Consumer<byte[]>>();
@@ -15,7 +15,7 @@ public class ConsumerRunnable implements Runnable {
     private PulsarConfig config;
     private int threadIndex;
 
-    public ConsumerRunnable(PulsarConfig config, int threadIndex) {
+    public SharedConsumerRunnable(PulsarConfig config, int threadIndex) {
         this.config = config;
         this.threadIndex = threadIndex;
     }

@@ -1,9 +1,8 @@
 package org.vander;
 
+import org.vander.config.PulsarConfig;
 import org.vander.producer.ProducerRunnable;
 
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

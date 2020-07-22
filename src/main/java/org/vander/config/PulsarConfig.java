@@ -1,4 +1,4 @@
-package org.vander;
+package org.vander.config;
 
 import org.apache.pulsar.shade.com.google.gson.Gson;
 
