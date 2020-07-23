@@ -7,7 +7,9 @@
   "producerUrl": [
     "pulsar://192.168.1.105:6650"
   ],
-  "consumerUrl": "pulsar://192.168.1.105:6650",
+  "consumerUrl": [
+                     "pulsar://192.168.1.105:6650"
+  ],
   "adminUrl": [
     "http://192.168.1.105:8080"
   ],
