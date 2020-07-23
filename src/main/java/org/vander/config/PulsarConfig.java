@@ -17,7 +17,7 @@ public class PulsarConfig {
     private int clientIOThreadsNumber;
 
     private List<String> producerUrlList;
-    private String consumerUrl;
+    private List<String> consumerUrl;
     private List<String> adminUrl;
     private String topicName = "my-topic-";
 
@@ -42,7 +42,7 @@ public class PulsarConfig {
             this.clientIOThreadsNumber = Integer.parseInt((String) jsonMap.get("clientIOThreadsNumber"));
 
             this.producerUrlList = (List<String>) jsonMap.get("producerUrl");
-            this.consumerUrl = (String) jsonMap.get("consumerUrl");
+            this.consumerUrl = (List<String>) jsonMap.get("consumerUrl");
             this.adminUrl = (List<String>) jsonMap.get("adminUrl");
 
             this.size = Integer.parseInt((String) jsonMap.get("payload-size"));
@@ -110,7 +110,7 @@ public class PulsarConfig {
         return producerUrlList;
     }
 
-    public String getConsumerUrl() {
+    public List<String> getConsumerUrl() {
         return consumerUrl;
     }
 
@@ -124,65 +124,5 @@ public class PulsarConfig {
 
     public int getSize() {
         return size;
-    }
-
-    public void setProducerThreadNumber(int producerThreadNumber) {
-        this.producerThreadNumber = producerThreadNumber;
-    }
-
-    public void setConsumerThreadNumber(int consumerThreadNumber) {
-        this.consumerThreadNumber = consumerThreadNumber;
-    }
-
-    public void setTopicNumberPerThread(int topicNumberPerThread) {
-        this.topicNumberPerThread = topicNumberPerThread;
-    }
-
-    public void setClientIOThreadsNumber(int clientIOThreadsNumber) {
-        this.clientIOThreadsNumber = clientIOThreadsNumber;
-    }
-
-    public void setProducerUrlList(List<String> producerUrlList) {
-        this.producerUrlList = producerUrlList;
-    }
-
-    public void setConsumerUrl(String consumerUrl) {
-        this.consumerUrl = consumerUrl;
-    }
-
-    public void setAdminUrl(List<String> adminUrl) {
-        this.adminUrl = adminUrl;
-    }
-
-    public void setTopicName(String topicName) {
-        this.topicName = topicName;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public void setEnableContinueMsg(boolean enableContinueMsg) {
-        this.enableContinueMsg = enableContinueMsg;
-    }
-
-    public void setMsgNumberPerTopic(int msgNumberPerTopic) {
-        this.msgNumberPerTopic = msgNumberPerTopic;
-    }
-
-    public void setCreateTopicInterval(int createTopicInterval) {
-        this.createTopicInterval = createTopicInterval;
-    }
-
-    public void setStatsFolderName(String statsFolderName) {
-        this.statsFolderName = statsFolderName;
-    }
-
-    public void setEnableTopicStats(boolean enableTopicStats) {
-        this.enableTopicStats = enableTopicStats;
-    }
-
-    public void setEnableTopicStatsFileLog(boolean enableTopicStatsFileLog) {
-        this.enableTopicStatsFileLog = enableTopicStatsFileLog;
     }
 }

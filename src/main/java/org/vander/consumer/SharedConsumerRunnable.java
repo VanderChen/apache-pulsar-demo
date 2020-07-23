@@ -23,9 +23,11 @@ public class SharedConsumerRunnable implements Runnable {
     @Override
     public void run() {
         try {
+            String url = config.getConsumerUrl().get((int)(threadIndex % config.getConsumerUrl().size()));
+
             client = PulsarClient.builder()
                     .ioThreads(config.getClientIOThreadsNumber())
-                    .serviceUrl(config.getConsumerUrl())
+                    .serviceUrl(url)
                     .build();
 
             for (int topicIndex = 0; topicIndex < config.getTopicNumberPerThread(); topicIndex++) {

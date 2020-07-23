@@ -34,7 +34,7 @@ public class SharedProducerRunnable implements Runnable{
     @Override
     public void run() {
         try {
-            String url = config.getProducerUrlList().get((int)(Math.random() * config.getProducerUrlList().size()));
+            String url = config.getProducerUrlList().get((int)(threadIndex % config.getProducerUrlList().size()));
 
             client = PulsarClient.builder()
                     .ioThreads(config.getClientIOThreadsNumber())
